@@ -58,3 +58,8 @@ class Cart:
 
     def format_total(self) -> str:
         return f"{self.total():.2f}"
+
+    def total_with_coupon(self, d: float, c: float) -> float:
+        x = self.total(d)
+        y = x * (1 - d / 100)
+        return round(y - c, 2)
