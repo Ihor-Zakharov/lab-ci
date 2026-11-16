@@ -1,3 +1,4 @@
+import os
 from dataclasses import dataclass
 from typing import Protocol
 
@@ -37,7 +38,7 @@ class Cart:
         del self._items[name]
 
     def items_count(self) -> int:
-        return sum(item.qty for item in self._items.values())
+        return sum( item.qty   for item in self._items.values() )
 
     def total(self, discount_percent: float = 0) -> float:
         if not 0 <= discount_percent <= 100:
