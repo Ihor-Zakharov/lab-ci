@@ -3,7 +3,7 @@ from typing import Protocol
 
 
 class RateProvider(Protocol):
-    """Джерело курсів валют: скільки гривень коштує 1 одиниця валюти."""
+    """Exchange rate source: price of 1 unit of a currency in UAH."""
 
     def get_rate(self, currency: str) -> float: ...
 
@@ -25,6 +25,8 @@ class Cart:
         if qty <= 0:
             raise ValueError("qty must be positive")
         if name in self._items:
+            if self._items[name].price != price:
+                raise ValueError("price differs from the price already in the cart")
             self._items[name].qty += qty
         else:
             self._items[name] = Item(name, price, qty)
@@ -48,3 +50,8 @@ class Cart:
         if rate <= 0:
             raise ValueError("rate must be positive")
         return round(self.total() / rate, 2)
+
+    def most_expensive(self) -> Item | None:
+        if not self._items:
+            return None
+        return max(self._items.values(), key=lambda item: item.price)
