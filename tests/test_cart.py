@@ -146,3 +146,7 @@ def test_most_expensive_compares_unit_price_not_line_total(empty_cart: Cart) -> 
     item = empty_cart.most_expensive()
     assert item is not None
     assert item.name == "book"
+
+
+def test_format_total_returns_string_with_cents(cart_with_items: Cart) -> None:
+    assert cart_with_items.format_total() == "460.00"
